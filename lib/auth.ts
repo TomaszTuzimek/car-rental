@@ -26,7 +26,7 @@ export const authConfig: NextAuthOptions = {
       },
       async authorize(creds) {
         if (!creds) {
-          return null;
+          return;
         }
           const validated = authSchema.safeParse(creds);
           if (!validated.success) {
@@ -36,8 +36,8 @@ export const authConfig: NextAuthOptions = {
 
           const user = await getUserByEmail(email);
           
-          if (!user || !(await compare(password, user.password))) {
-            return null;
+          if (!user || !(compare(password, user.password))) {
+            return;
           }
   
           return user;
